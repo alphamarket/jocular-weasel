@@ -21,13 +21,13 @@
         <form action="#<?php $this->request->getURI(); ?>?<?php echo \zinux\kernel\security\security::__get_uri_hash_string() ?>" method="post" name="editor-form">
             <div class="col-centered">
                 <div class="container-fluid" style="padding: 5px 0 5px 0; padding-left: 0;">
-                    <input type="text" class="form-control pull-left" style="border-radius: 0; min-width: 300px; width: 70%;" placeholder="The Title" required autofocus name="title" tabindex="0" value="xx"/>
+                    <input type="text" class="form-control pull-left" style="border-radius: 0; min-width: 300px; width: 70%;" placeholder="The Title" required autofocus name="title" value="xx"/>
                     <a href='#' data-href='/' class='btn btn-default pull-right' style='background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0;margin-top: 0px;' tabindex="-1"><span class='fa fa-trash'></span> Discard</a>
                 </div>
-                <textarea id="editor" tabindex="1"></textarea>
+                <textarea id="editor"></textarea>
             </div>
             <div class="col-centered">
-            <button type="submit" class='btn btn-default pull-right' style='background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0' tabindex="2"><span class='fa fa-save'></span> Save</button>
+            <button type="submit" class='btn btn-default pull-right' style='background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0'><span class='fa fa-save'></span> Save</button>
             </div>
         </form>
     </div>
