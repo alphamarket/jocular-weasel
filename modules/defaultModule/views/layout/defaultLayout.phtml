@@ -43,6 +43,18 @@
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
+            <?php if(\modules\defaultModule\models\user::HasSignedin()): ?>
+            <div class="collapse navbar-collapse navbar-ex1-collapse pull-left">
+                <ul class="nav navbar-nav">
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a href="/disqus/new"><span class="fa fa-plus"></span> Disqus</a>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+            <?php endif; ?>
         </div><!-- /.container -->
     </nav>
     <div class="container" style="padding-top: 100px;">
