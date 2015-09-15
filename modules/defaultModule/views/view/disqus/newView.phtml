@@ -14,15 +14,41 @@
             $(this).find("[name='content']").val(window.editor.getHTML());
             return true;
         });
+        $("#draft-notation").hide();
+        if(localStorage.getItem("note-draft") !== null) {
+            var draft = JSON.parse(localStorage.getItem("note-draft"));
+            $("[name='title']").text(draft.title),
+            window.editor.setHTML(draft.body);
+        }
+        var previous_draft = { title: $("[name='title']").text(), body: window.editor.getHTML() };
+        var draft_int = setInterval(function() {
+            var current_draft = { title: $("[name='title']").text(), body: window.editor.getHTML() };
+            if(current_draft.title === previous_draft.title && current_draft.body === previous_draft.body) return;
+            localStorage["note-draft"] = JSON.stringify(current_draft);
+            $("#draft-notation").fadeIn().delay(3000).fadeOut();
+        }, 10000);
+        $("#discard-draft").click(function() {
+            if(localStorage.getItem("note-draft") !== null) {
+                if(confirm("Are you sure that you want to drop the saved draft?")) {
+                    clearInterval(draft_int);
+                    localStorage.removeItem("note-draft");
+                }
+            } else window.location.href = "/";
+        });
     });
 </script>
+<style>
+    .btn {background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0;margin-top: 0px;}
+</style>
 <div class="container">
     <div class="row">
         <form action="#<?php $this->request->getURI(); ?>?<?php echo \zinux\kernel\security\security::__get_uri_hash_string() ?>" method="post" name="editor-form">
             <div class="col-centered">
                 <div class="container-fluid" style="padding: 5px 0 5px 0; padding-left: 0;">
-                    <input type="text" class="form-control pull-left" style="border-radius: 0; min-width: 300px; width: 70%;" placeholder="The Title" required autofocus name="title" value="xx"/>
-                    <a href='#' data-href='/' class='btn btn-default pull-right' style='background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0;margin-top: 0px;' tabindex="-1"><span class='fa fa-trash'></span> Discard</a>
+                    <input type="text" class="form-control pull-left" style="border-radius: 0; min-width: 300px; width: 70%;" placeholder="Some heroic disqusion title!" required autofocus name="title" />
+                    <a href='#' data-href='/' id="discard-draft" class='btn btn-default pull-right' tabindex="-1"><span class='fa fa-trash'></span> Discard</a>
+                    <div class="pull-right text-muted btn" id="draft-notation" style="font-weight: initial; color:#aaa"><span class="fa fa-check draft-notation-icon"></span> <span id="draft-notation-text">draft saved</span></div>
+                    <div class="clearfix"></div>
                 </div>
                 <textarea id="editor"></textarea>
             </div>
