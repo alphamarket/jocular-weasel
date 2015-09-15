@@ -48,13 +48,8 @@ class disqusController extends \zinux\kernel\controller\baseController
     */
     public function newAction()
     {
-        
+        if(!$this->request->IsPOST()) return;
+        \zinux\kernel\utilities\debug::_var($this->request->params, 1);
     }
-
-    /**
-    * The \modules\defaultModule\controllers\disqusController::editorAction()
-    * @by Zinux Generator <b.g.dariush@gmail.com>
-    */
-    
 }
 
