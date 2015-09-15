@@ -6,3 +6,6 @@
 [submodule "vendors/activerecord/lib"]
 	path = vendors/activerecord/lib
 	url = git@github.com:jpfuentes2/php-activerecord.git
+[submodule "public_html/statics/js/Squire"]
+	path = public_html/statics/js/Squire
+	url = git@github.com:neilj/Squire.git
