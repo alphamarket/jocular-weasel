@@ -1,8 +1,16 @@
-<!--
- The \modules\defaultModule\views\view\index\indexView
- @by Zinux Generator <b.g.dariush@gmail.com>
- -->
-<p>
-    A view for '<b>\modules\defaultModule\controllers\indexController::indexAction()</b>'<br />
-    Location: '<b>/var/www/disqus/modules/defaultModule/views/view/index/indexView.phtml</b>'
-</p>
+<?php if(!\modules\defaultModule\models\user::HasSignedin()): ?>
+    <style type="text/css">
+        .error-container {width: 580px;padding: 20px;margin: 10px auto;border: 1px solid #cccccc;}
+        .error-header { border-bottom: 1px solid #cccccc; padding-bottom: 10px; font-weight: bold}
+        .error-body {text-align: justify; padding: 10px; font-size: 15px}
+        .eref {font-family: monospace;cursor: pointer;width: 98%;overflow: auto}
+    </style>
+    <div class="error-container">
+        <div class="error-header">
+            <span class="glyphicon glyphicon-warning-sign"></span> Access Denied
+        </div>
+        <div class="error-body" style='text-align: center!important'>
+            You are not authorized to view the site's content.
+        </div>
+    </div>
+<?php endif; ?>

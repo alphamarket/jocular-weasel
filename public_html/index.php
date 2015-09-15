@@ -12,7 +12,7 @@
     defined('PUBLIC_HTML') || define('PUBLIC_HTML', dirname(__FILE__));
 
     defined("__SERVER_NAME__") || define("__SERVER_NAME__", $_SERVER['HTTP_HOST']);
-
+    
     switch(RUNNING_ENV)
     {
         case "TEST":
@@ -29,8 +29,6 @@
     require_once PUBLIC_HTML.'/../zinux/zinux.php';
 try
 {
-    # no access for un-auth users
-    if(!\modules\defaultModule\models\user::HasSignedin()) header("HTTP/1.1 403 ACCESS DENIED");
     # create an application with given module directory
     $app = new \zinux\kernel\application\application(PUBLIC_HTML.'/../modules');
     # process the application instance
@@ -41,8 +39,14 @@ try
             # setting router's bootstrap which will route /note/:id:/edit => /note/edit/:id:
             #->SetRouterBootstrap(new \application\appRoutes)
 
-            # set application's bootstrap
-            #->SetBootstrap(new application\appBootstrap)
+            # set application's db bootstrap 
+            ->SetBootstrap(new application\dbBootstrap)
+            
+            # load project basic config initializer
+            ->SetConfigIniliazer(new \zinux\kernel\utilities\iniParser(PROJECT_ROOT."/config/default.cfg", RUNNING_ENV))
+
+            # init activerecord as db handler
+            ->SetInitializer(new \vendors\activerecord\ARInitializer)
 
             # init the application's optz.
             ->Startup()
