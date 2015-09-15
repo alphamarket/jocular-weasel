@@ -1,4 +1,5 @@
 <?php
+    session_name('XID');
     session_start();
     # if we access by shell
     # set HTTP_HOST to the script name
@@ -28,6 +29,8 @@
     require_once PUBLIC_HTML.'/../zinux/zinux.php';
 try
 {
+    # no access for un-auth users
+    if(!\modules\defaultModule\models\user::HasSignedin()) header("HTTP/1.1 403 ACCESS DENIED");
     # create an application with given module directory
     $app = new \zinux\kernel\application\application(PUBLIC_HTML.'/../modules');
     # process the application instance
