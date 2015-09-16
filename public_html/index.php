@@ -27,8 +27,25 @@
     }
 
     require_once PUBLIC_HTML.'/../zinux/zinux.php';
-try
-{
+    /**
+     * This is out execption handler
+     * @param Exception $exception
+     */
+    function toratan_exception_handler($exception) {
+        $mp = new \zinux\kernel\utilities\pipe("__ERRORS__");
+        try{
+            $mp->write($exception);
+        }catch(\Exception $e) {
+            unset($e);
+            modules\defaultModule\controllers\errorController::$__EXTERN_ERROR = $exception;
+        }
+        # we need to use api because httpRequest will contain error(/error will set error header)
+        # cannot user `header()` we because of the URI change!! we want the error URI remain same.
+        @\zinux\kernel\application\api::call("/error");
+        exit;
+    }
+    # set exception handler
+    set_exception_handler('toratan_exception_handler');
     # create an application with given module directory
     $app = new \zinux\kernel\application\application(PUBLIC_HTML.'/../modules');
     # process the application instance
@@ -54,15 +71,3 @@ try
             ->Run()
             # shutdown the application
             ->Shutdown();
-}
-# catch any thing from application
-catch(Exception $e)
-{
-    /**
-     * You can redirect this exception to a controller e.g /error
-     */
-    echo "<legend>Oops!</legend>";
-    echo "<p>Error happened ...</p>";
-    echo "<p><b>Message: </b></p><p>{$e->getMessage()}</p>";
-    echo "<p><b>Stack Trace: </b></p><pre>".$e->getTraceAsString()."</pre>";
-}

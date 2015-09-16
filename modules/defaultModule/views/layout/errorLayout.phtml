@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <?php $this->RenderTitle();?>
+    <?php $this->RenderImports(); ?>
+    <!-- Bootstrap Core CSS -->
+    <link href="/statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/statics/css/font-awesome.min.css" rel="stylesheet" >
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body data-spy="scroll" data-target=".navbar-fixed-top" id="page-top">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <button class="navbar-toggle" data-target=".navbar-ex1-collapse" data-toggle="collapse" type="button">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="/"><span class="fa fa-database"></span> iDisqus</a>
+            </div>
+        </div><!-- /.container -->
+    </nav>
+        <script type="text/javascript">
+            (function($){
+                // if we are in a frame?
+                if(window.top !== window.self)
+                    // remove the header
+                    $("nav.navbar").remove();
+                    // if i am in a frame?
+                    if(window.top !== window.self)
+                        window.top.document.title = '<?php echo $this->getTitle() ?>';
+            })();
+        </script>
+        <div class="clearfix" style="margin-top:100px;"></div>
+        <div id="error-layout">
+            <style type="text/css">
+                .error-container {width: 580px;padding: 20px;margin: 10px auto;border: 1px solid #cccccc;}
+                .error-header { border-bottom: 1px solid #cccccc; padding-bottom: 10px; font-weight: bold}
+                .error-body {text-align: justify; padding: 10px; font-size: 15px}
+                .eref {font-family: monospace;cursor: pointer;width: 98%;overflow: auto}
+            </style>
+            <div class="container">
+                <div class="error-container">
+                    <?php echo $this->content; ?>
+                    <div class="clearfix"></div>
+                    <small style="padding: 10px;">
+                        » <a href="/">Return home</a>
+                    </small>
+                    <div class="block" style="margin: 5px"></div>
+                </div>
+            </div>
+        </div>
+    <script src="/statics/js/jquery.min.js" type="text/javascript"></script> 
+    <script src="/statics/js/bootstrap.min.js" type="text/javascript"></script>
+</body>
+</html>

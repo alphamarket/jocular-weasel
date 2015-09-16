@@ -9,28 +9,46 @@
 <script language="javascript" type="text/javascript">
     $(document).ready(function () {
         window.editor = new SquireUI({replace: 'textarea#editor', height: Math.max($(document).height() - 300, 300), buildPath: "/statics/js/squire/build/"});
+        var init_draft = function() {
+            if(localStorage.getItem("note-draft") === null)
+                 localStorage["note-draft"] = JSON.stringify({}); 
+        };
+        var draft_exists = function() {
+            return get_draft() !== undefined;
+        };
+        var discard_draft = function() {
+            var hash = JSON.parse(localStorage["note-draft"]);
+            delete hash["new"];
+            localStorage["note-draft"] = JSON.stringify(hash);
+        };
+        var set_draft = function(d) {
+            var hash = JSON.parse(localStorage["note-draft"]);
+            hash["new"] = d;
+            localStorage["note-draft"] = JSON.stringify(hash);
+        };
+        var get_draft = function() {
+            var hash = JSON.parse(localStorage["note-draft"]);
+            return hash["new"];
+        };
         $("form[name='editor-form']").submit(function(){
+            clearInterval(draft_int);
             $(this).append("<input type='hidden' name='content'>");
             $(this).find("[name='content']").val(window.editor.getHTML());
+            discard_draft();
             return true;
         });
         $("#draft-notation").hide();
-        if(localStorage.getItem("note-draft") !== null) {
-            var hash = JSON.parse(localStorage["note-draft"]);
-            if(hash["new"] !== undefined){
-                var draft = hash["new"];
-                console.log(draft);
+        init_draft();
+        if(draft_exists()) {
+                var draft = get_draft();
                 $("[name='title']").val(draft.title);
                 window.editor.setHTML(draft.body);
-            }
-        } else { localStorage["note-draft"] = JSON.stringify({}); }
+        }
         var previous_draft = { title: $("[name='title']").val(), body: window.editor.getHTML() };
         var draft_int = setInterval(function() {
             var current_draft = { title: $("[name='title']").val(), body: window.editor.getHTML() };
             if(current_draft.title === previous_draft.title && current_draft.body === previous_draft.body) return;
-            var hash = JSON.parse(localStorage["note-draft"]);
-            hash["new"] = current_draft;
-            localStorage["note-draft"] = JSON.stringify(hash);
+            set_draft(current_draft);
             previous_draft = current_draft;
             $("#draft-notation").fadeIn().delay(3000).fadeOut();
         }, 10000);
@@ -38,9 +56,7 @@
             if(localStorage.getItem("note-draft") !== null) {
                 if(confirm("Are you sure that you want to drop the saved draft?")) {
                     clearInterval(draft_int);
-                    var hash = JSON.parse(localStorage["note-draft"]);
-                    delete hash["new"];
-                    localStorage["note-draft"] = JSON.stringify(hash);
+                    discard_draft();
                     window.location.href = "/";
                 }
             } else window.location.href = "/";
@@ -52,7 +68,7 @@
 </style>
 <div class="container">
     <div class="row">
-        <form action="#<?php $this->request->getURI(); ?>?<?php echo \zinux\kernel\security\security::__get_uri_hash_string() ?>" method="post" name="editor-form">
+        <form action="<?php $this->request->getURI(); ?>?<?php echo \zinux\kernel\security\security::__get_uri_hash_string() ?>" method="post" name="editor-form">
             <div class="col-centered">
                 <div class="container-fluid" style="padding: 5px 0 5px 0; padding-left: 0;">
                     <input type="text" class="form-control pull-left" style="border-radius: 0; min-width: 300px; width: 70%;" placeholder="Some heroic disqusion title!" required autofocus name="title" />
