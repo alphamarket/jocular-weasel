@@ -6,4 +6,7 @@ namespace modules\defaultModule\models;
 */
 class disqus extends \ActiveRecord\Model
 {
+    static $belongs_to = array(
+        "user"
+    );
 }
