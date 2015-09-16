@@ -28,6 +28,20 @@
                 </button>
                 <a class="navbar-brand page-scroll" href="/"><span class="fa fa-database"></span> iDisqus</a>
             </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li class="hidden">
+                        <a class="page-scroll" href="#page-top"></a>
+                    </li>
+                    <li>
+                    <?php if(!\modules\defaultModule\models\user::HasSignedin()): ?>
+                        <a class="page-scroll" href="/signin"><span class="fa fa-sign-in"></span> Signin</a>
+                    <?php else: ?>
+                        <a class="page-scroll" href="/signout"><span class="fa fa-sign-out"></span> Signout</a>
+                    <?php endif; ?>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->
     </nav>
         <script type="text/javascript">

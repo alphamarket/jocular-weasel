@@ -7,12 +7,6 @@ namespace modules\defaultModule\controllers;
  */
 class disqusController extends \zinux\kernel\controller\baseController
 {
-    public function Initiate()
-    {
-        parent::Initiate();
-        if(!\modules\defaultModule\models\user::HasSignedin())
-            throw new \zinux\kernel\exceptions\accessDeniedException;
-    }
     /**
     * The modules\defaultModule\controllers\disqusController::IndexAction()
     * @by Zinux Generator <b.g.dariush@gmail.com>
