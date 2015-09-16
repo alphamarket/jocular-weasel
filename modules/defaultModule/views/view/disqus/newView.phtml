@@ -16,22 +16,32 @@
         });
         $("#draft-notation").hide();
         if(localStorage.getItem("note-draft") !== null) {
-            var draft = JSON.parse(localStorage.getItem("note-draft"));
-            $("[name='title']").text(draft.title),
-            window.editor.setHTML(draft.body);
-        }
-        var previous_draft = { title: $("[name='title']").text(), body: window.editor.getHTML() };
+            var hash = JSON.parse(localStorage["note-draft"]);
+            if(hash["new"] !== undefined){
+                var draft = hash["new"];
+                console.log(draft);
+                $("[name='title']").val(draft.title);
+                window.editor.setHTML(draft.body);
+            }
+        } else { localStorage["note-draft"] = JSON.stringify({}); }
+        var previous_draft = { title: $("[name='title']").val(), body: window.editor.getHTML() };
         var draft_int = setInterval(function() {
-            var current_draft = { title: $("[name='title']").text(), body: window.editor.getHTML() };
+            var current_draft = { title: $("[name='title']").val(), body: window.editor.getHTML() };
             if(current_draft.title === previous_draft.title && current_draft.body === previous_draft.body) return;
-            localStorage["note-draft"] = JSON.stringify(current_draft);
+            var hash = JSON.parse(localStorage["note-draft"]);
+            hash["new"] = current_draft;
+            localStorage["note-draft"] = JSON.stringify(hash);
+            previous_draft = current_draft;
             $("#draft-notation").fadeIn().delay(3000).fadeOut();
         }, 10000);
         $("#discard-draft").click(function() {
             if(localStorage.getItem("note-draft") !== null) {
                 if(confirm("Are you sure that you want to drop the saved draft?")) {
                     clearInterval(draft_int);
-                    localStorage.removeItem("note-draft");
+                    var hash = JSON.parse(localStorage["note-draft"]);
+                    delete hash["new"];
+                    localStorage["note-draft"] = JSON.stringify(hash);
+                    window.location.href = "/";
                 }
             } else window.location.href = "/";
         });
