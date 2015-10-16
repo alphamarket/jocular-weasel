@@ -35,7 +35,6 @@ class disqusController extends \zinux\kernel\controller\baseController
         $this->view->total_pages = ceil($ds->count(array('conditions' => 'parentid IS NULL')) / $limit);
         $this->view->query = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
         $this->view->disqus = \modules\defaultModule\models\disqus::first($disqus_id);
-    
     }
 
     /**
@@ -73,15 +72,24 @@ class disqusController extends \zinux\kernel\controller\baseController
     */
     public function newAction()
     {
+        if(isset($this->request->params["ajax"])) $this->layout->SuppressLayout();
         if(!$this->request->IsPOST()) return;
         \zinux\kernel\security\security::__validate_request($this->request->params);
-        \zinux\kernel\security\security::IsSecure($this->request->params, array("title", "content"));
+        $is_reply = isset($this->request->params["pid"]);
+        $essential_data = array('content');
+        if($is_reply)
+            $essential_data[] = "pid";
+        else 
+            $essential_data[] = "title";
+        \zinux\kernel\security\security::IsSecure($this->request->params, $essential_data);
         $disqus = new \modules\defaultModule\models\disqus;
-        $disqus->title = trim($this->request->params["title"]);
+        if(!$is_reply) $disqus->title = trim($this->request->params["title"]);
         $disqus->context = trim($this->request->params["content"]);
         $disqus->created_by =\modules\defaultModule\models\user::GetInstance()->userid;
+        if($is_reply)
+            $disqus->parentid = $this->request->params["pid"];
         $disqus->save();
-        header("location: /disqus/view/{$disqus->disqusid}");
+        header("location: /disqus/view/". ($is_reply ? $disqus->parentid : $disqus->disqusid));
         exit;
     }
     

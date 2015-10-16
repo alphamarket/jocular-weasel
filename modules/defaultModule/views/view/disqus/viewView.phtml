@@ -5,6 +5,11 @@
         <div id='origin_author' class="author text-muted" style="font-size: small" >Created by <abbr style="border-bottom: 2px #aaa dotted"><?= $this->disqus->user()->username ?></abbr></div>
         <div class="clearfix"></div>
     </header>
+    <div class='new-disqus' style='margin: 10px;'>
+        <div class='pull-right'><a id='reply-disqus' href='#' onclick="return false;"><span class='fa fa-reply'></span> Disqus</a></div>
+        <div class='pull-left' id='reply-editor' style='display: none'><?php // $this->RenderPartial('new', array('parentid' => $this->disqus->disqusid, 'request_uri' => '/disqus/new')) ?></div>
+        <div class='clearfix'></div>
+    </div>
     <?php foreach ($this->query as $disqus) : ?>
     <div class='idisqus ' style="border:1px solid #eee; padding: 10px; margin: 10px">
         <div class="" style="">
@@ -46,12 +51,20 @@
             $(this).text(moment($(this).attr('data-date')).fromNow('ll') + " ago");
             $(this).attr('title', moment($(this).attr('data-date')).format('lll'));
         });
+        var replay_mutex = false;
+        $("#reply-disqus").click(function() {
+            if(replay_mutex) { return; }
+            replay_mutex = true;
+            $(this).hide();
+            $('#reply-editor').show().html('<span class="fa fa-spin fa-spinner"></span>');
+            $('#reply-editor').hide().load('/disqus/new?ajax=1&pid=<?= $this->disqus->disqusid?>', function() { replay_mutex = false; }).ready(function(){ $('#reply-editor').show(); });
+        });
         $('.delete-it').click(function(e){
             e.preventDefault();
             $(this).closest('.idisqus').css({"background-color": "#F4EAEA"});
             if(confirm("Are you sure that you want to delete highlighted disqus?")) {
                 var $elem = $(this);
-                var jqxhr = $.get($elem.attr('data-href'), function() {
+                $.get($elem.attr('data-href'), function() {
                     $elem.closest('.idisqus').fadeOut();
                 })
                 .fail(function() {
