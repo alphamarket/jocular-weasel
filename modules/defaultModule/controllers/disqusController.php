@@ -46,17 +46,19 @@ class disqusController extends \zinux\kernel\controller\baseController
         \zinux\kernel\security\security::__validate_request($this->request->params, array(@$this->request->indexed_param[0]));
         $disqus = \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0]);
         if(!$disqus->parentid) {
-            $next = \modules\defaultModule\models\disqus::first(array('conditions' => array('parentid = ?', $disqus->disqusid)));
+            $next_loc = "/";
+            $next = \modules\defaultModule\models\disqus::first(array('order' => 'created_at asc', 'conditions' => array('parentid = ?', $disqus->disqusid)));
             if($next) {
                 $next->title = $disqus->title;
                 $next->parentid = NULL;
                 $next->save();
                 $next->readonly();
-                \modules\defaultModule\models\disqus::update_all(array('set' => array('parentid = ?', $next->disqusid), 'conditions' => array('parentid = ?', $disqus->disqusid)));
+                $next_loc = "/disqus/view/$next->disqusid";
+                \modules\defaultModule\models\disqus::update_all(array('set' => array('parentid' => $next->disqusid), 'conditions' => array('parentid = ?', $disqus->disqusid)));
             }
-        }
+        } else $next_loc = "/disqus/view/$disqus->parentid";
         $disqus->delete();
-        header("location: /");
+        header("location: $next_loc");
         exit;
     }
 

@@ -64,15 +64,7 @@
             $(this).closest('.idisqus').css({"background-color": "#F4EAEA"});
             if(confirm("Are you sure that you want to delete highlighted disqus?")) {
                 var $elem = $(this);
-                $.get($elem.attr('data-href'), function() {
-                    $elem.closest('.idisqus').fadeOut();
-                })
-                .fail(function() {
-                    alert('Could not delete the disqus, an error occured!');
-                })
-                .always(function() {
-                    $elem.closest('.idisqus').css({"background-color": "transparent"});
-                });
+                window.location = $elem.attr('data-href');
             } else {
                     $(this).closest('.idisqus').css({"background-color": "transparent"});
             }
