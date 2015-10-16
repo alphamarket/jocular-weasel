@@ -6,7 +6,7 @@ namespace modules\defaultModule\models;
 */
 class disqus extends \ActiveRecord\Model
 {
-    static $belongs_to = array(
-        "user"
-    );
+    public function user() {
+        return user::find($this->created_by, array('select' => 'username', 'readonly' => true));
+    }
 }

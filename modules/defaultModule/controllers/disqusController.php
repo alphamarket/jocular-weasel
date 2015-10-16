@@ -21,7 +21,6 @@ class disqusController extends \zinux\kernel\controller\baseController
     public function viewAction()
     {
         $this->view->disqus = \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0]);
-        \zinux\kernel\utilities\debug::_var($this->view->disqus, 1);
     }
 
     /**
