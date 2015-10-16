@@ -69,11 +69,14 @@
                     <div class="clearfix"></div>
                     <small style="padding: 10px;">
                         » <a href="/">Return home</a>
+                        <?php if(isset($this->view->error->hash)): ?>
+                        <br />
+                        <span class="pull-right text-muted eref text-right" title="While trying contact us regarding to this error please pass the error reference">
+                            Ref# <span style='color:#337ab7'><?= $this->view->error->hash ?></span>
+                        </span>
+                        <?php endif; ?>
                     </small>
                     <div class="block" style="margin: 5px"></div>
-                </div>
-                <div class='error-container' style='border: 0'>
-                    <?php echo \zinux\kernel\utilities\debug::_var($this->view->error->getMessage()) ?>
                 </div>
             </div>
         </div>

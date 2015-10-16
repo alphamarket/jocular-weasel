@@ -72,5 +72,7 @@ class errorController extends \zinux\kernel\controller\baseController
         if(!headers_sent())
             # send the error header
             header("HTTP/1.1 $code $msg");
+        if($code != 403)
+            $this->view->error->hash = \modules\defaultModule\models\exception::register($this->view->error);
     }
 }
