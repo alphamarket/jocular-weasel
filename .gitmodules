@@ -6,6 +6,6 @@
 [submodule "vendors/activerecord/lib"]
 	path = vendors/activerecord/lib
 	url = git@github.com:jpfuentes2/php-activerecord.git
-[submodule "vendors/PHPMailer"]
-	path = vendors/PHPMailer
+[submodule "vendors/PHPMailer/lib"]
+	path = vendors/PHPMailer/lib
 	url = git@github.com:PHPMailer/PHPMailer.git
