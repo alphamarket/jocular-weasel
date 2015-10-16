@@ -33,13 +33,18 @@
                     <li class="hidden">
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
-                    <li>
                     <?php if(!\modules\defaultModule\models\user::HasSignedin()): ?>
-                        <a class="page-scroll" href="/signin"><span class="fa fa-sign-in"></span> Signin</a>
-                    <?php else: ?>
-                        <a class="page-scroll" href="/signout"><span class="fa fa-sign-out"></span> Signout</a>
-                    <?php endif; ?>
+                    <li>
+                        <a class="page-scroll" href="/signup"><span class="fa fa-plug"></span> Signup</a>
                     </li>
+                    <li>
+                        <a class="page-scroll" href="/signin"><span class="fa fa-sign-in"></span> Signin</a>
+                    </li>
+                    <?php else: ?>
+                    <li>
+                        <a class="page-scroll" href="/signout"><span class="fa fa-sign-out"></span> Signout</a>
+                    </li>
+                    <?php endif; ?>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container -->

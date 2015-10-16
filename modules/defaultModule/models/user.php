@@ -13,15 +13,15 @@ class user extends \ActiveRecord\Model
     protected static function getUserObjectHash() { return substr(\zinux\kernel\security\hash::Generate(self::USER_OBJECT), 0, 6); } 
     /**
      * Fetches a user's info by either its username or its email and its password 
-     * @param string $username_or_userID The users ID or username 
+     * @param string $username_or_email The users ID or username 
      * @param string $password the user's email or password if password no set it only will search by username or email
      * @return user
      */
-    public static function Fetch($username_or_userID, $password = NULL) {
+    public static function Fetch($username_or_email, $password = NULL) {
         # find the user with its username or email and password
-        $cond = array("(username = ? OR userid = ?)",
-                    $username_or_userID,
-                    $username_or_userID);
+        $cond = array("(username = ? OR email = ?)",
+                    $username_or_email,
+                    $username_or_email);
         if($password)
         {
             $cond[0].= " AND password = MD5(?)";

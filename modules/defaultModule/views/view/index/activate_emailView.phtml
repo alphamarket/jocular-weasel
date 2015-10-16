@@ -1,0 +1,72 @@
+<?php $u = $this->user; ?>
+<html>
+    <body>
+        <table bgcolor="#f1f1f1" width="100%" height="100%" align="center" style="border-collapse:collapse" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td valign="top">
+                        <table border="1" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="text-align:left">
+                            <tbody>
+                                <tr>
+                                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                    <td width="568" valign="top" style="font-size:83%;border-top:none;border-bottom:none;border-left:none;border-right:none;font-size:13px;font-family:arial,sans-serif;color:#222222;line-height:18px">
+                                        Hi <?php echo $u->username; ?>,
+                                        <br>
+                                        <br>
+                                        Recently you have created an account at <a href='<?php echo zinux\kernel\application\config::GetConfig("idisqus.web_root") ?>'>iDisqus</a>.
+                                        <br>
+                                        If you didn't made this request, you can ignore it.
+                                        <br>
+                                        <br>
+                                        To get back into your account, you'll need to activate your account. By clicking the following activation button you will be redirected to a page which your account will be activated.
+                                        <br>
+                                        <br>
+                                        <a href="<?php echo zinux\kernel\application\config::GetConfig("idisqus.web_root") ?><?php echo $this->alink ?>" style="text-align:center;font-size:11px;font-family:arial,sans-serif;color:white;font-weight:bold;border-color:#3079ed;background-color:#4d90fe;background-image:linear-gradient(top,#4d90fe,#4787ed);text-decoration:none;display:inline-block;min-height:27px;padding-left:8px;padding-right:8px;line-height:27px;border-radius:2px;border-width:1px" target="_blank">
+                                        <span style="color:white">
+                                        Activate your account
+                                        </span>
+                                        </a>
+                                        <br>
+                                        <br>
+                                        Sincerely,<br>
+                                        The iDisqus Accounts team
+                                    </td>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none"></td>
+                                    <td width="568" style="font-size:11px;font-family:arial,sans-serif;color:#777777;border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                        This email can't receive replies.
+                                    </td>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none"></td>
+                                </tr>
+                                <tr>
+                                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
