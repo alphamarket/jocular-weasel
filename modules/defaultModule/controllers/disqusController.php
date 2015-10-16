@@ -102,7 +102,41 @@ class disqusController extends \zinux\kernel\controller\baseController
         if($is_reply)
             $disqus->parentid = $this->request->params["pid"];
         $disqus->save();
-        header("location: /disqus/view/". ($is_reply ? $disqus->parentid : $disqus->disqusid));
+        
+        $return_uri = "/disqus/view/". ($is_reply ? $disqus->parentid : $disqus->disqusid);
+        
+        $users = \modules\defaultModule\models\user::all(array('select' => 'email,username', 'readonly' => true, 'conditions' => array('userid = ?', \modules\defaultModule\models\user::GetInstance()->userid)));
+        
+        foreach($users as $user) {
+            # factor an instance of php mailer
+            $mail = new \modules\defaultModule\models\mailer("noreply", \zinux\kernel\application\config::GetConfig("idisqus.mail.noreply.password"));
+            $mail->CharSet = 'UTF-8';
+            # add a subject
+            $mail->Subject = $disqus->title;
+            if($is_reply)
+                $mail->Subject = "Re: ".  \modules\defaultModule\models\disqus::find($disqus->parentid, array('select' => 'title'))->title;
+            # add the reciever address
+            $mail->addAddress($user->email); 
+            # start reading the html context of reset mail
+            ob_start();
+                $this->view->RenderPartial("notify_disqus",
+                        array(
+                                'user' => $user, 
+                                'poster' => \modules\defaultModule\models\user::GetInstance(),
+                                'is_reply' => $is_reply,
+                                'title' => preg_replace("#^Re: #i", "", $mail->Subject),
+                                'disqus' => $disqus,
+                                'return_uri' => $return_uri));
+            # set the html msg and clean the ob's buffer
+            $mail->msgHTML(ob_get_clean());
+            # msgHTML also sets AltBody, but if you want a custom one, set it afterwards
+            $mail->AltBody = 'New '.($is_reply ? 'reply' : 'post').' from '.  \modules\defaultModule\models\user::GetInstance()->username;
+            # try to send the email
+            if (!$mail->send())
+                die("ERROR EMAILING");
+                ; # LOG THE FAILURE
+        }
+        header("location: $return_uri");
         exit;
     }
 }

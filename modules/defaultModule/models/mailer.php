@@ -6,7 +6,7 @@ namespace modules\defaultModule\models;
  *
  * @author dariush
  */
-class mailer //extends \PHPMailer
+class mailer extends \PHPMailer
 {
     public function __construct($user_name, $password, $exceptions=true)
     {

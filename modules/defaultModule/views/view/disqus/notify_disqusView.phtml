@@ -1,0 +1,76 @@
+<?php $u = $this->user; ?>
+<?php $p = $this->poster; ?>
+<html>
+    <body>
+        <table bgcolor="#f1f1f1" width="100%" height="100%" align="center" style="border-collapse:collapse" border="0" cellspacing="0" cellpadding="0">
+            <tbody>
+                <tr>
+                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                    </td>
+                </tr>
+                <tr align="center">
+                    <td valign="top">
+                        <table border="1" cellspacing="0" cellpadding="0" bgcolor="#ffffff" style="text-align:left">
+                            <tbody>
+                                <tr>
+                                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                    <td width="568" valign="top" style="font-size:83%;border-top:none;border-bottom:none;border-left:none;border-right:none;font-size:13px;font-family:arial,sans-serif;color:#222222;line-height:18px">
+                                        Hi <?php echo $u->username; ?>,
+                                        <br>
+                                        <br>
+                                        <div >
+                                            <div style="float: left;">
+                                                <img style="margin-top: 30px;"src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAMAAAD04JH5AAACIlBMVEUAAABeXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl5eXl4Jit68AAAAtXRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAhIiMkJSYnKCkqKywtLi8wMTIzNDU2ODo7PD0+P0BBQkNERUZHSUpLTE1OUFFSVFVXWFlbXF1eX2FjZGZnaGlrbG1vcHF0dXh5e3x+f4CCg4WGiImLjI+RlJWXmJqbnZ6goqOlpqiqq62vsLK0tbe5ury+wMHDxcfIyszOz9HT1dfa3N7g4uTm6Onr7e/x8/X3+fv9cO4aEgAABPtJREFUeNrtWvtbE0cU3c07hgAhUpNUIBIMEK0BBQMItoAtBSI+2qIi4aVAGp5SitJSkZe0RtBibEmjPEqEAMEEkv3/+nu/2d3ZzczQ7+veP2DPyc3s3HPuWYqCLbnRUe95HIgxnBXxj7ZW2fQ0hbJoY+mdqW1GUIXG3IVpKMA157vfMGIrPnc7T54CuLywd4tJud7cNov6Q1RV8wyq+jhSJJAD7Zxl0FbcZ4aHV9/dZzBUqAquDZrvkwym2m3kpyBrTzAYa8fFg1+4zWCulzqus9fH4K94OXv7Fxgi9R3b73/OEKqbYAIehljlgvD15PCZ9yACHQQJMFYAgb9IEmgFEDgiSWAQQIAkPvNIIiARkAj87wmMAghskSTQCSDwA0kCpQAC+QTxPwIN23NyBBrAfmSHFP4siyjM3COD75exyeITIRL4Exz2SObDDn9YzW2NTmNuwk8aXnfo+oAPfskCtRy4jKkL0xboDcGnY8g98u5dnbD9UNkzhGuCg4E8MTsqhy+CAj14zyJ+UZZeMZrSxiDY7VDDYvWx3U9qW8vEmmDoxIqv1sT2yLQmkCAJO7hejQxHy+AijGZIvJvuvWbVcj3rRoJFEfmz+deHWQVldbe6Rp4uvw1thPdiycRBZGstGHgxOdB+vcaZl67gfcTFMIckmzFRmKvsPY8mXHbS+NCVzWEIUbp3PwsLOm0bT8Kq4nctBtTo1odRYbL8w4NCBSp0nWviUJQvCHjOaVMFz6wYDKdkTKJzbZeyZKJOnKWm//cEIme0OdFaeSYD8j9RGYvqOmf2cVizwz8mvfcaXcWnDVq1UiGjaYqiKFomV6g0upPWC9XXPUMzG2K9YZSkM+oHEPiNJIGvAATqSBLQgyT5Ljn8J8DDe5YY/q4S/Po0EMKPGdle4Boi+Nscs85CYE2yoOJUwr2Y4Q+u8N2jhlmM8MkumNvc9AsuY9ylgZxjes8Bevi1eiH6gi5+gtQd7vecEjzOZY5hRPNpvc0sVs5kXZuKpQYeHiyHFVVn2ezhpZ7XovKk6Ny3drZTBwoOmSGOzz201nrva+hmRBY6XCYl+9MyVsCKaK+K71joLCVND8bnAluAlsQ2Xj0daa9zZGt4nI28h12SrRZDvyYKlUarSzcYjZl6nVathP5YRtYY5dSEf57H6MwoStG8zytKt90qXPBZ3iM4VTztwNAGVV1QgCw/nPhMjhL9RO1L4b5gyZ2NpBEKW+eGWGOSWLxl06SATac7e4IpO6P4YrsId6i0XPW+RWnNdn71tZSatbx/ikxvrWgdX4kJt2aQ4/doc3lqoK2pstzpsJ/JMWd/YsnNt58ruXz1RtejmQDsUnEYQGCdpDNqAxDwkiRQBCBwiiD+DvAo/UiOQBl4TIZI4Q+zfUlI6Bw+Zr80X5DA7+C6Rr5J4oaP2LkvsgzMTejjH7L2VXzwk3qoOVLgx+NMhzLg96s9yM3h+tdKYZPcPhZHhx72nBS1Ye/cQIG+5E4hf9CW9KdyOyVf3cmH1passZ0ip2F4VfD9EPc/rDTSCGO7NHuzd34TZg8S/Ln78xw1rthOabBd/OImKLbz3XdXX8jV83dciu2k2E6K7aTYTort/rOxXe2xx3YRcvhga1Jw7LHdl6RiO9ZZc4VMbMcxZ0x/48ef55TnMim2k2I7KbY7xtiOIhnbCTepSGM70YUmtkOk88XGdv+ufwDl1FCot/RRAAAAAABJRU5ErkJggg==" height="64">
+                                            </div>
+                                            <div style="float: left;margin-left: 30px;margin-top:-10px;word-break: break-all; width: 450px">
+                                                <p style="color: #777"><?= $this->is_reply ? "A reply to:" : "New post" ?></p>
+                                                <h2  dir="auto"><a href='<?php $this->return_url ?>' style="font-size:115%;color:#0077cc;text-decoration:none;"><?= $this->title ?></a></h2>
+                                                <?php $context = strip_tags($this->disqus->context); ?>
+                                                <p  dir="auto" style="text-align: justify"><?= substr($context, 0, 500), (strlen($context) > 500 ? "..." : "") ?></p>
+                                            </div>
+                                            <div style="clear: both"></div>
+                                        </div>
+                                    </td>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                                <tr><td colspan="3" style="border: none; border-bottom:1px solid #eee"><br></td></tr>
+                                <tr>
+                                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none"></td>
+                                    <td width="568" style="font-size:11px;font-family:arial,sans-serif;color:#777777;border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                        This email can't receive replies.
+                                    </td>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none"></td>
+                                </tr>
+                                <tr>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none"></td>
+                                    <td width="568" style="font-size:11px;font-family:arial,sans-serif;color:#777777;border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                        You can always <a href="#">unsubscribe</a> from this kind of notifications.
+                                    </td>
+                                    <td width="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none"></td>
+                                </tr>
+                                <tr>
+                                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="15" style="border-top:none;border-bottom:none;border-left:none;border-right:none">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

@@ -65,6 +65,9 @@
             # init activerecord as db handler
             ->SetInitializer(new \vendors\activerecord\ARInitializer)
 
+            # register PHPMailer plugin
+            ->SetInitializer(new \vendors\PHPMailer\PHPMailerInitializer)
+            
             # init the application's optz.
             ->Startup()
             # run the application
