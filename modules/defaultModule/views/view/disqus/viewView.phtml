@@ -1,25 +1,31 @@
+<?php if(!is_array(@$this->query)) throw new zinux\kernel\exceptions\invalidOperationException; ?>
 <div>
     <header  style="border-bottom: 1px #e7e7e7 solid;padding-bottom: 15px">
         <h1 id="disqus-title"><small class="fa fa-angle-double-right"></small> <?= $this->disqus->title ?></h1>
         <div id='origin_author' class="author text-muted" style="font-size: small" >Created by <abbr style="border-bottom: 2px #aaa dotted"><?= $this->disqus->user()->username ?></abbr></div>
         <div class="clearfix"></div>
     </header>
+    <?php foreach ($this->query as $disqus) : ?>
     <div class='idisqus ' style="border:1px solid #eee; padding: 10px; margin: 10px">
         <div class="" style="">
-        <?= $this->disqus->context ?>
+        <?= $disqus->context ?>
         </div>
         <div class='idisqus-footer' style='border-top: 1px solid #eee; padding: 10px; padding-bottom: 0; margin-top: 10px'>
-            <div class="author text-muted pull-left" style='font-size: small'>Posted by <?= $this->disqus->user()->username ?> <span class='fa fa-clock-o'></span> <abbr class='time' data-date='<?= $this->disqus->created_at ?>'></abbr></div>
-            <?php if($this->disqus->created_by == \modules\defaultModule\models\user::GetInstance()->userid) : ?>
+            <div class="author text-muted pull-left" style='font-size: small'>
+                Posted by <?= $disqus->user()->username ?> <span class='fa fa-clock-o'></span>
+                Created <abbr class='time' data-date='<?= $disqus->created_at ?>'></abbr>
+                <?= $disqus->created_at == $disqus->updated_at ? " | Edited <abbr class='time' data-date='{$disqus->updated_at}'></abbr>" : "" ?>
+            </div>
+            <?php if($disqus->created_by == \modules\defaultModule\models\user::GetInstance()->userid) : ?>
             <div class='pull-right'>
                 <ul class='list-inline' style='margin: 0'>
                     <li >
-                        <a class='edit-it text-muted' href='#' data-href='/disqus/delete/<?= $this->disqus->disqusid, "?", \zinux\kernel\security\security::__get_uri_hash_string(array($this->disqus->disqusid)) ?>'>
+                        <a class='delete-it text-muted' href='#' data-href='/disqus/delete/<?= $disqus->disqusid, "?", \zinux\kernel\security\security::__get_uri_hash_string(array($disqus->disqusid)) ?>'>
                             <span class='fa fa-trash'></span> Delete
                         </a>
                     </li>
                     <li>
-                        <a class='delete-it' href='/disqus/edit/<?= $this->disqus->disqusid, "?", \zinux\kernel\security\security::__get_uri_hash_string(array($this->disqus->disqusid)) ?>'>
+                        <a class='edit-it' href='/disqus/edit/<?= $disqus->disqusid, "?", \zinux\kernel\security\security::__get_uri_hash_string(array($disqus->disqusid)) ?>'>
                             <span class='fa fa-pencil'></span> Edit
                         </a>
                     </li>
@@ -30,14 +36,33 @@
         </div>
         <div class="clearfix"></div>
     </div>
+    <?php endforeach; ?>
 </div>
 <script type="text/javascript" src="/statics/js/moment.min.js"></script>
 <script src="/statics/js/jquery.min.js" type="text/javascript"></script> 
 <script type='text/javascript'>
     $(document).ready(function(){
-        $("abbr.time").each(function(index, elem) {
+        $("abbr.time").each(function() {
             $(this).text(moment($(this).attr('data-date')).fromNow('ll') + " ago");
             $(this).attr('title', moment($(this).attr('data-date')).format('lll'));
+        });
+        $('.delete-it').click(function(e){
+            e.preventDefault();
+            $(this).closest('.idisqus').css({"background-color": "#F4EAEA"});
+            if(confirm("Are you sure that you want to delete highlighted disqus?")) {
+                var $elem = $(this);
+                var jqxhr = $.get($elem.attr('data-href'), function() {
+                    $elem.closest('.idisqus').fadeOut();
+                })
+                .fail(function() {
+                    alert('Could not delete the disqus, an error occured!');
+                })
+                .always(function() {
+                    $elem.closest('.idisqus').css({"background-color": "transparent"});
+                });
+            } else {
+                    $(this).closest('.idisqus').css({"background-color": "transparent"});
+            }
         });
     });
 </script>

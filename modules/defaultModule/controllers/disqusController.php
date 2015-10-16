@@ -20,7 +20,22 @@ class disqusController extends \zinux\kernel\controller\baseController
     */
     public function viewAction()
     {
-        $this->view->disqus = \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0]);
+        $disqus_id = @$this->request->indexed_param[0];
+        $limit = 10;
+        $offset = (!isset($this->request->params["page"])? 0 : $this->request->params["page"] - 1) * $limit;
+        $ds = new \modules\defaultModule\models\disqus;
+        $qb = new \ActiveRecord\SQLBuilder($ds->connection(), $ds->table_name());
+        $qb
+                ->select("*")
+                ->where("parentid = ? OR disqusid = ?", $disqus_id, $disqus_id)
+                ->offset($offset)
+                ->limit($limit)
+                ->order("created_at desc");
+        $this->view->current_page = floor($offset / $limit) + 1;
+        $this->view->total_pages = ceil($ds->count(array('conditions' => 'parentid IS NULL')) / $limit);
+        $this->view->query = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
+        $this->view->disqus = \modules\defaultModule\models\disqus::first($disqus_id);
+    
     }
 
     /**
@@ -29,7 +44,7 @@ class disqusController extends \zinux\kernel\controller\baseController
     */
     public function deleteAction()
     {
-        \zinux\kernel\security\security::__validate_request($this->request->params);
+        \zinux\kernel\security\security::__validate_request($this->request->params, array(@$this->request->indexed_param[0]));
         \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0])->delete();
         header("location: /");
         exit;
