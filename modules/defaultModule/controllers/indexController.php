@@ -22,7 +22,7 @@ class indexController extends \zinux\kernel\controller\baseController
                 ->where("parentid IS NULL")
                 ->joins("INNER JOIN users ON users.userid= disquses.created_by")
                 ->offset($offset)
-                ->limit(20)
+                ->limit($limit)
                 ->order("updated_at desc");
         $this->view->current_page = floor($offset / $limit) + 1;
         $this->view->total_pages = ceil($ds->count(array('conditions' => 'parentid IS NULL')) / $limit);
