@@ -105,7 +105,7 @@ class disqusController extends \zinux\kernel\controller\baseController
         
         $return_uri = "/disqus/view/". ($is_reply ? $disqus->parentid : $disqus->disqusid);
         
-        $users = \modules\defaultModule\models\user::all(array('select' => 'email,username', 'readonly' => true, 'conditions' => array('userid = ?', \modules\defaultModule\models\user::GetInstance()->userid)));
+        $users = \modules\defaultModule\models\user::all(array('select' => 'email,username', 'readonly' => true, 'conditions' => array('userid <> ?', \modules\defaultModule\models\user::GetInstance()->userid)));
         
         foreach($users as $user) {
             # factor an instance of php mailer
