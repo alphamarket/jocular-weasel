@@ -9,4 +9,45 @@ class disqus extends \ActiveRecord\Model
     public function user() {
         return user::find($this->created_by, array('select' => 'username', 'readonly' => true));
     }
+    public function get_latest_toptics($offset, $limit) {
+        $ds = new self;
+        $qb = new \ActiveRecord\SQLBuilder($ds->connection(), $ds->table_name());
+        $qb
+                ->select("disqusid, title")
+                ->where("parentid IS NULL")
+                ->offset($offset)
+                ->limit($limit);
+        // fetch roots
+        $roots = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
+        // fetch latest reply
+        $qb
+                ->select("disqusid, title, context, username, disquses.updated_at")
+                ->joins("INNER JOIN disquses ON disquses.disqusid = disquses.parentid")
+                ->joins("INNER JOIN users ON users.userid= disquses.created_by")
+                ->limit(1)
+                ->order("disquses.updated_at desc");
+        $latest_topics = array();
+        foreach($roots as $root) {
+                $qb->where("parentid = ?", $root->disqusid);
+                $query = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
+                // if no sub-topic?
+                if(!count($query)) {
+                    // consider the root topic!
+                    $qb->where("disqusid = ?", $root->disqusid);
+                    $query = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
+                }
+                $topic = array_shift($query);
+                $topic->readonly();
+                $topic->title = $root->title;
+                $topic->disqusid = $root->disqusid;
+                $latest_topics[] = $topic;
+        }
+        // sort by updated_at desc
+        usort($latest_topics, function($a, $b) { 
+            if($a->updated_at == $b->updated_at)  return 0;
+            if($a->updated_at < $b->updated_at) return 1;
+            return -1;
+        });
+        return $latest_topics;
+    }
 }

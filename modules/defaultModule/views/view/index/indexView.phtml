@@ -5,9 +5,9 @@
     <div style="border-bottom: 1px solid #eee">
         <h3 style="margin: 0"><small class="fa fa-angle-double-right"></small> <a href="/disqus/view/<?= $disqus->disqusid ?>"><?= $disqus->title ?></a></h3>
         <small class="text-muted">
-            <span class="pull-right" style="margin:3px; margin-top: 10px">by <?= $disqus->username ?></span>
             <span class="updated-date pull-right" style="margin:3px; margin-top: 10px" data-date='<?= $disqus->updated_at ?>'></span>
-            <span class="fa fa-pencil pull-right" style='margin:3px; margin-top: 10px'></span> 
+            <span class="pull-right" style="margin:3px; margin-top: 10px">By <span style="border-bottom: 2px dotted #aaa"><?= $disqus->username ?></span></span>
+            <span class="fa fa-pencil pull-right" style='margin:0px; margin-top: 12px'></span> 
         </small>
         <div class="clearfix"></div>
     </div>
@@ -17,6 +17,11 @@
     <div class="clearfix" style="margin-top: 70px!important;"></div>
 </div>
 <?php endforeach; ?>
+<?php if(!count($this->query)): ?>
+<div style='border: 1px solid #eee; padding: 20px;' class='text-muted text-center'>
+    Woow, No Disqus!!<br />You can always <a href='/disqus/new'>create</a> new disquses.
+</div>
+<?php endif; ?>
 <?php $margin = 3; if($this->total_pages > 1) : ?>
 <nav class="text-center">
   <ul class="pagination">
@@ -49,7 +54,7 @@
 <script type='text/javascript'>
     $(document).ready(function(){
         $(".updated-date[data-date]").each(function(index, elem) {
-            $(this).text("Last update: " + moment($(this).attr('data-date')).fromNow('ll') + " ago;");
+            $(this).html("<span class='fa fa-clock-o'></span> " + moment($(this).attr('data-date')).fromNow('ll') + " ago");
         });
     });
 </script>

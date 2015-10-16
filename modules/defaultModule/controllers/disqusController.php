@@ -44,7 +44,18 @@ class disqusController extends \zinux\kernel\controller\baseController
     public function deleteAction()
     {
         \zinux\kernel\security\security::__validate_request($this->request->params, array(@$this->request->indexed_param[0]));
-        \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0])->delete();
+        $disqus = \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0]);
+        if(!$disqus->parentid) {
+            $next = \modules\defaultModule\models\disqus::first(array('conditions' => array('parentid = ?', $disqus->disqusid)));
+            if($next) {
+                $next->title = $disqus->title;
+                $next->parentid = NULL;
+                $next->save();
+                $next->readonly();
+                \modules\defaultModule\models\disqus::update_all(array('set' => array('parentid = ?', $next->disqusid), 'conditions' => array('parentid = ?', $disqus->disqusid)));
+            }
+        }
+        $disqus->delete();
         header("location: /");
         exit;
     }
@@ -91,22 +102,6 @@ class disqusController extends \zinux\kernel\controller\baseController
         $disqus->save();
         header("location: /disqus/view/". ($is_reply ? $disqus->parentid : $disqus->disqusid));
         exit;
-    }
-    
-    public function draftAction()
-    {
-        \zinux\kernel\security\security::__validate_request($this->request->params);
-        \zinux\kernel\security\security::IsSecure($this->request->params, array("title", "content"));
-        if(!@$this->request->params["did"])
-            $draft = new \modules\defaultModule\models\draft;
-        else
-            $draft =\modules\defaultModule\models\draft::first($this->request->params["did"]);
-        $draft->title = trim($this->request->params["title"]);
-        $draft->context = trim($this->request->params["content"]);
-        $draft->save();
-        if(!@$this->request->params["did"]) 
-            echo "{ 'draft_id': {$draft->draftid} }";
-        die;
     }
 }
 

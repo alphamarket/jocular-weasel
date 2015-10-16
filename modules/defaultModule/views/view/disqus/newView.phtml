@@ -19,7 +19,7 @@
         window.editor
                 .setTextDirection('auto')
                 .setFontSize('16px');
-        var draft_name = "note-draft-<?= (isset($this->parentid) ? "$this->parentid" : "") ?>";
+        var draft_name = "note-draft<?= (isset($this->parentid) ? "-$this->parentid" : "") ?>";
         var init_draft = function() {
             if(localStorage.getItem(draft_name) === null)
                  localStorage[draft_name] = JSON.stringify({}); 
@@ -68,7 +68,7 @@
                 if(confirm("Are you sure that you want to drop the saved draft?")) {
                     clearInterval(draft_int);
                     discard_draft();
-                    window.location.href = reply_mode ? "/disqus/view/<?=$this->parentid?>" : "/";
+                    window.location.href = reply_mode ? "/disqus/view/<?=@$this->parentid?>" : "/";
                 }
             } else window.location.href = "/";
         });

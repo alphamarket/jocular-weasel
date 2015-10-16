@@ -16,17 +16,9 @@ class indexController extends \zinux\kernel\controller\baseController
         $limit = 20;
         $offset = (!isset($this->request->params["page"])? 0 : $this->request->params["page"] - 1) * $limit;
         $ds = new \modules\defaultModule\models\disqus;
-        $qb = new \ActiveRecord\SQLBuilder($ds->connection(), $ds->table_name());
-        $qb
-                ->select("disqusid, title, context, username, disquses.updated_at")
-                ->where("parentid IS NULL")
-                ->joins("INNER JOIN users ON users.userid= disquses.created_by")
-                ->offset($offset)
-                ->limit($limit)
-                ->order("updated_at desc");
+        $this->view->query = $ds->get_latest_toptics($offset, $limit);
         $this->view->current_page = floor($offset / $limit) + 1;
         $this->view->total_pages = ceil($ds->count(array('conditions' => 'parentid IS NULL')) / $limit);
-        $this->view->query = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
     }
 
     /**
