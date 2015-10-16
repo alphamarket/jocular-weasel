@@ -59,6 +59,8 @@ class indexController extends \zinux\kernel\controller\baseController
     */
     public function signupAction()
     {
+        if(\zinux\kernel\application\config::GetConfig("idisqus.disable.signup"))
+            throw new \zinux\kernel\exceptions\accessDeniedException;
         if(!$this->request->IsPOST()) return;
         try{
             \zinux\kernel\security\security::__validate_request($this->request->params);
@@ -100,6 +102,8 @@ class indexController extends \zinux\kernel\controller\baseController
     */
     public function activateAction()
     {
+        if(\zinux\kernel\application\config::GetConfig("idisqus.disable.signup"))
+            throw new \zinux\kernel\exceptions\accessDeniedException;
         \zinux\kernel\security\security::IsSecure($this->request->params, array("u", "h"));
         try{
             $user =\modules\defaultModule\models\user::find($this->request->params["u"]);
