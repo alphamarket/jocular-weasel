@@ -28,9 +28,7 @@
             return get_draft() !== undefined;
         };
         var discard_draft = function() {
-            var hash = JSON.parse(localStorage[draft_name]);
-            delete hash["new"];
-            localStorage[draft_name] = JSON.stringify(hash);
+            delete localStorage[draft_name];
         };
         var set_draft = function(d) {
             var hash = JSON.parse(localStorage[draft_name]);
