@@ -1,8 +1,5 @@
-<!--
- The \modules\defaultModule\views\view\disqus\editView
- @by Zinux Generator <b.g.dariush@gmail.com>
- -->
-<p>
-    A view for '<b>\modules\defaultModule\controllers\disqusController::editAction()</b>'<br />
-    Location: '<b>/var/www/disqus//modules/defaultModule/views/view/disqus/editView.phtml</b>'
-</p>
+<?php
+    $this->disqus->readonly();
+    if(!is_null($this->disqus->parentid))
+        $this->disqus->title = "Re: ".(modules\defaultModule\models\disqus::find($this->disqus->parentid, array('select' => 'title', 'readonly' => true))->title);
+    $this->RenderPartial('new', array('disqus' => $this->disqus, 'request_uri' => $this->request->getURI()));

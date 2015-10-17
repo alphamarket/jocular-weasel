@@ -68,14 +68,18 @@ class disqusController extends \zinux\kernel\controller\baseController
     */
     public function editAction()
     {
-        \zinux\kernel\security\security::__validate_request($this->request->params);
+        \zinux\kernel\security\security::__validate_request($this->request->params, array(@$this->request->indexed_param[0]));
         $this->view->disqus = \modules\defaultModule\models\disqus::first(@$this->request->indexed_param[0]);
         if(!$this->request->IsPOST()) return;
         \zinux\kernel\security\security::IsSecure($this->request->params, array("title", "content"));
-        $this->view->disqus->title = trim($this->request->params["title"]);
+        $uri_id = $this->view->disqus->disqusid;
+        if(is_null($this->view->disqus->parentid)) {
+            $this->view->disqus->title = trim($this->request->params["title"]);
+        } else 
+            $uri_id = $this->view->disqus->parentid;
         $this->view->disqus->context = trim($this->request->params["content"]);
         $this->view->disqus->save();
-        header("location: /disqus/view/{$this->view->disqus->disqusid}");
+        header("location: /disqus/view/$uri_id");
         exit;
     }
 
