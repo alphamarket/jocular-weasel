@@ -7,6 +7,10 @@ namespace modules\defaultModule\controllers;
  */
 class disqusController extends \zinux\kernel\controller\baseController
 {
+    public function Initiate()
+    {
+        $this->layout->AddTitle(ucwords(preg_replace("#action$#i", "", $this->request->action->name)). " | iDisqus");
+    }
     /**
     * The modules\defaultModule\controllers\disqusController::IndexAction()
     * @by Zinux Generator <b.g.dariush@gmail.com>
@@ -35,6 +39,7 @@ class disqusController extends \zinux\kernel\controller\baseController
         $this->view->total_pages = ceil($ds->count(array('conditions' => 'parentid IS NULL')) / $limit);
         $this->view->query = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
         $this->view->disqus = \modules\defaultModule\models\disqus::first($disqus_id);
+        $this->layout->AddTitle($this->view->disqus->title." | iDisqus");
     }
 
     /**
