@@ -9,7 +9,7 @@ class indexController extends \zinux\kernel\controller\baseController
 {
     public function Initiate()
     {
-        $this->layout->AddTitle(ucwords(preg_replace("#action$#i", "", $this->request->action->name)));
+        $this->layout->AddTitle(ucwords(preg_replace("#action$#i", "", $this->request->action->name)). " | iDisqus");
     }
     /**
     * The modules\defaultModule\controllers\indexController::IndexAction()
