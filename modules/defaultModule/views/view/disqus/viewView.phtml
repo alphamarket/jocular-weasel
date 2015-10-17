@@ -19,7 +19,7 @@
             <div class="author text-muted pull-left" style='font-size: small'>
                 Posted by <?= $disqus->user()->username ?> <span class='fa fa-clock-o'></span>
                 Created <abbr class='time' data-date='<?= $disqus->created_at ?>'></abbr>
-                <?= $disqus->created_at == $disqus->updated_at ? " | Edited <abbr class='time' data-date='{$disqus->updated_at}'></abbr>" : "" ?>
+                <?= date_diff($disqus->created_at, $disqus->updated_at)->format('%h') /* no edition within an hour will be counted */ ? " | Edited <abbr class='time' data-date='{$disqus->updated_at}'></abbr>" : "" ?>
             </div>
             <?php if($disqus->created_by == \modules\defaultModule\models\user::GetInstance()->userid) : ?>
             <div class='pull-right'>
