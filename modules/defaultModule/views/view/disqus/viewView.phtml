@@ -1,7 +1,7 @@
 <?php if(!is_array(@$this->query)) throw new zinux\kernel\exceptions\invalidOperationException; ?>
 <div>
     <header  style="border-bottom: 1px #e7e7e7 solid;padding-bottom: 15px">
-        <h1 id="disqus-title"><small class="fa fa-angle-double-right"></small> <?= $this->disqus->title ?></h1>
+        <h1 id="disqus-title" dir="auto"><small class="fa fa-thumb-tack"></small> <?= $this->disqus->title ?></h1>
         <div id='origin_author' class="author text-muted" style="font-size: small" >Created by <abbr style="border-bottom: 2px #aaa dotted"><?= $this->disqus->user()->username ?></abbr></div>
         <div class="clearfix"></div>
     </header>
