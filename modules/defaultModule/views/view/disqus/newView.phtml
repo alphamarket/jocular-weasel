@@ -31,9 +31,9 @@
                 buildPath: "/statics/js/squire/build/"
         });
         window.editor
+                .setHTML("<?php echo $is_edit ? addslashes($this->disqus->context) : "" ?>")
                 .setTextDirection('auto')
-                .setFontSize('16px')
-                .setHTML("<?php echo $is_edit ? addslashes($this->disqus->context) : "" ?>");
+                .setFontSize('16px');
         var draft_name = "note-draft<?= (isset($this->parentid) ? "-$this->parentid" : "") ?>";
         var init_draft = function() {
             if(localStorage.getItem(draft_name) === null)
@@ -101,7 +101,7 @@
                 <div class="container-fluid" style="padding: 5px 0 5px 0; padding-left: 0;">
                     <?php if(!isset($this->parentid)): ?>
                     <input type="text" class="form-control pull-left" style="border-radius: 0; min-width: 300px; width: 70%;" placeholder="Some heroic disqusion title!" required autofocus name="title" 
-                        <?php echo ( $is_edit ? "value='{$this->disqus->title}'" : "") ?> <?= is_null($this->disqus->parentid) ? "" : "disabled" ?>/>
+                        <?php echo ( $is_edit ? "value='{$this->disqus->title}'" : "") ?> <?= $is_edit && is_null($this->disqus->parentid) ? "" : "disabled" ?>/>
                     <?php endif; ?>
                     <a href='#' data-href='<?= $this->discard_uri ?>' id="discard-draft" class='btn btn-default pull-right' tabindex="-1"><span class='fa fa-trash'></span> Discard</a>
                     <div class="pull-right text-muted btn" id="draft-notation" style="font-weight: initial; color:#aaa"><span class="fa fa-check draft-notation-icon"></span> <span id="draft-notation-text">draft saved</span></div>
