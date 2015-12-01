@@ -10,6 +10,8 @@ class disqusController extends \zinux\kernel\controller\baseController
     public function Initiate()
     {
         $this->layout->AddTitle(ucwords(preg_replace("#action$#i", "", $this->request->action->name)). " | iDisqus");
+        if(!\modules\defaultModule\models\user::HasSignedin() && $this->request->action->name != "view")
+            throw new \zinux\kernel\exceptions\accessDeniedException;
     }
     /**
     * The modules\defaultModule\controllers\disqusController::IndexAction()

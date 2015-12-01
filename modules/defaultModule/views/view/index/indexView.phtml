@@ -25,7 +25,10 @@
 <?php endforeach; ?>
 <?php if(!count($this->query)): ?>
 <div style='border: 1px solid #eee; padding: 20px;' class='text-muted text-center'>
-    Woow, No Disqus!!<br />You can always <a href='/disqus/new<?= isset($this->request->params["tag"]) ? "/tag/{$this->request->params["tag"]}" : "" ?>'>create</a> new disquses.
+    Woow, No Disqus!!
+    <?php if(\modules\defaultModule\models\user::HasSignedin()) : ?>
+    <br />You can always <a href='/disqus/new<?= isset($this->request->params["tag"]) ? "/tag/{$this->request->params["tag"]}" : "" ?>'>create</a> new disquses.
+    <?php endif; ?>
 </div>
 <?php endif; ?>
 <?php $margin = 3; if($this->total_pages > 1) : ?>

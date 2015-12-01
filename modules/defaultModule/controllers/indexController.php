@@ -113,4 +113,5 @@ class indexController extends \zinux\kernel\controller\baseController
         $user->activated = 1;
         $user->save();
     }
+    public function aboutAction() { }
 }
