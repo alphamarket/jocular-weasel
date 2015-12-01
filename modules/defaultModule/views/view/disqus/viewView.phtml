@@ -5,11 +5,13 @@
         <div id='origin_author' class="author text-muted" style="font-size: small" >Created by <abbr style="border-bottom: 2px #aaa dotted"><?= $this->disqus->user()->username ?></abbr></div>
         <div class="clearfix"></div>
     </header>
+    <?php if(\modules\defaultModule\models\user::HasSignedin()): ?>
     <div class='new-disqus' style='margin: 10px;'>
         <div class='pull-right'><a id='reply-disqus' href='#' onclick="return false;"><span class='fa fa-reply'></span> Disqus</a></div>
         <div class='pull-left' id='reply-editor' style='display: none'><?php // $this->RenderPartial('new', array('parentid' => $this->disqus->disqusid, 'request_uri' => '/disqus/new')) ?></div>
         <div class='clearfix'></div>
     </div>
+    <?php endif; ?>
     <?php foreach ($this->query as $disqus) : ?>
     <div class='idisqus ' style="border:1px solid #eee; padding: 10px; margin: 10px">
         <div class="" style="font-size: 16px" dir="auto">
@@ -21,7 +23,7 @@
                 Created <abbr class='time' data-date='<?= $disqus->created_at ?>'></abbr>
                 <?= date_diff($disqus->created_at, $disqus->updated_at)->format('%h') /* no edition within an hour will be counted */ ? " | Edited <abbr class='time' data-date='{$disqus->updated_at}'></abbr>" : "" ?>
             </div>
-            <?php if($disqus->created_by == \modules\defaultModule\models\user::GetInstance()->userid) : ?>
+            <?php if($disqus->created_by == @\modules\defaultModule\models\user::GetInstance()->userid) : ?>
             <div class='pull-right'>
                 <ul class='list-inline' style='margin: 0'>
                     <li >

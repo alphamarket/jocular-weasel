@@ -30,6 +30,5 @@ class defaultBootstrap
         # if current request's matches with an index in the signin free list
         if(isset($signin_free_ops[$current_request["controller"]]) && ($signin_free_ops[$current_request["controller"]] === "*" || in_array($current_request["action"], $signin_free_ops[$current_request["controller"]])))
             return;
-        throw new \zinux\kernel\exceptions\accessDeniedException;
     }
 }
