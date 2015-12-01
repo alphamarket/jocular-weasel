@@ -4,6 +4,12 @@
 <div id="disqus-<?= $index ?>" style='margin: 10px; padding: 10px;'>
     <div style="border-bottom: 1px solid #eee">
         <h3 style="margin: 0"  dir="auto"><small class="fa fa-thumb-tack"></small> <a href="/disqus/view/<?= $disqus->disqusid ?>"><?= $disqus->title ?></a></h3>
+        <?php if(@$disqus->tag_id): ?>
+        <ol class="list-inline pull-left" style='margin:3px; margin-top: 10px'>
+            <?php $tag = \modules\defaultModule\models\tag::find(@$disqus->tag_id)->tag_name; ?>
+            <li class='active'><span class='fa fa-tag'></span> <a href='/tag/<?= $tag ?>'><?= $tag ?></a>
+        </ol>
+        <?php endif; ?>
         <small class="text-muted">
             <span class="updated-date pull-right" style="margin:3px; margin-top: 10px" data-date='<?= $disqus->updated_at ?>'></span>
             <span class="pull-right" style="margin:3px; margin-top: 10px">By <span style="border-bottom: 2px dotted #aaa"><?= $disqus->username ?></span></span>

@@ -2,6 +2,12 @@
 <div>
     <header  style="border-bottom: 1px #e7e7e7 solid;padding-bottom: 15px">
         <h1 id="disqus-title" dir="auto"><small class="fa fa-thumb-tack"></small> <?= $this->disqus->title ?></h1>
+        <?php if($this->disqus->tag_id): ?>
+        <ol class="list-inline">
+            <?php $tag = \modules\defaultModule\models\tag::find($this->disqus->tag_id)->tag_name; ?>
+            <li class='active'><span class='fa fa-tag'></span> <a href='/tag/<?= $tag ?>'><?= $tag ?></a>
+        </ol>
+        <?php endif; ?>
         <div id='origin_author' class="author text-muted" style="font-size: small" >Created by <abbr style="border-bottom: 2px #aaa dotted"><?= $this->disqus->user()->username ?></abbr></div>
         <div class="clearfix"></div>
     </header>

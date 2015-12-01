@@ -83,6 +83,7 @@ class disqusController extends \zinux\kernel\controller\baseController
         } else 
             $uri_id = $this->view->disqus->parentid;
         $this->view->disqus->context = trim($this->request->params["content"]);
+        $this->view->disqus->tag_id = @$this->request->params["tag"];
         $this->view->disqus->save();
         header("location: /disqus/view/$uri_id");
         exit;
@@ -108,6 +109,7 @@ class disqusController extends \zinux\kernel\controller\baseController
         if(!$is_reply) $disqus->title = trim($this->request->params["title"]);
         $disqus->context = trim($this->request->params["content"]);
         $disqus->created_by =\modules\defaultModule\models\user::GetInstance()->userid;
+        $disqus->tag_id = @$this->request->params["tag"];
         if($is_reply)
             $disqus->parentid = $this->request->params["pid"];
         $disqus->save();

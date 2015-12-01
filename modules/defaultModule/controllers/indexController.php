@@ -20,7 +20,7 @@ class indexController extends \zinux\kernel\controller\baseController
         $limit = 20;
         $offset = (!isset($this->request->params["page"])? 0 : $this->request->params["page"] - 1) * $limit;
         $ds = new \modules\defaultModule\models\disqus;
-        $this->view->query = $ds->get_latest_toptics($offset, $limit);
+        $this->view->query = $ds->get_latest_toptics($offset, $limit, @$this->request->params["tag"]);
         $this->view->current_page = floor($offset / $limit) + 1;
         $this->view->total_pages = ceil($ds->count(array('conditions' => 'parentid IS NULL')) / $limit);
     }

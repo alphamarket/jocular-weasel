@@ -34,6 +34,7 @@ class errorController extends \zinux\kernel\controller\baseController
     public function IndexAction()
     {
         $last = $this->view->error;
+        \zinux\kernel\utilities\debug::_var($last, 1);
         /** 
          * status codes reference : RFC 2616
          * http://tools.ietf.org/html/rfc2616

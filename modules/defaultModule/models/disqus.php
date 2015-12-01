@@ -6,22 +6,30 @@ namespace modules\defaultModule\models;
 */
 class disqus extends \ActiveRecord\Model
 {
+    static $has_one = array("tag");
     public function user() {
         return user::find($this->created_by, array('select' => 'username', 'readonly' => true));
     }
-    public function get_latest_toptics($offset, $limit) {
+    public function get_latest_toptics($offset, $limit, $tag_name = NULL) {
+        if($tag_name) {
+        }
         $ds = new self;
         $qb = new \ActiveRecord\SQLBuilder($ds->connection(), $ds->table_name());
         $qb
-                ->select("disqusid, title")
+                ->select("disqusid, title, tag_id")
                 ->where("parentid IS NULL")
                 ->offset($offset)
                 ->limit($limit);
+        if($tag_name) {
+            $tag = tag::fetch($tag_name);
+            if(!$tag) return array();
+            $qb->where("parentid IS NULL AND tag_id = ?", $tag->tag_id);
+        }
         // fetch roots
         $roots = $ds->find_by_sql($qb->to_s(), $qb->bind_values());
         // fetch latest reply
         $qb
-                ->select("disqusid, title, context, username, disquses.updated_at")
+                ->select("disqusid, title, context, username, tag_id, disquses.updated_at")
                 ->joins("INNER JOIN disquses ON disquses.disqusid = disquses.parentid")
                 ->joins("INNER JOIN users ON users.userid= disquses.created_by")
                 ->limit(1)
@@ -39,6 +47,7 @@ class disqus extends \ActiveRecord\Model
                 $topic = array_shift($query);
                 $topic->readonly();
                 $topic->title = $root->title;
+                $topic->tag_id = @$root->tag_id;
                 $topic->disqusid = $root->disqusid;
                 $latest_topics[] = $topic;
         }

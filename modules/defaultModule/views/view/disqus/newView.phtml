@@ -88,6 +88,9 @@
                 }
             } else window.location.href = $(this).attr('data-href');
         });
+        $("#new-tag").click(function(){
+            $(this).hide();
+        });
     });
 </script>
 <style>
@@ -108,8 +111,24 @@
                 </div>
                 <textarea id="editor"></textarea>
             </div>
-            <div class="col-centered">
-            <button type="submit" class='btn btn-default pull-right' style='background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0'><span class='fa fa-save'></span> Post</button>
+            <div class="col-centered" style="margin-top:10px">
+                    <?php if(!($is_reply || ($is_edit && @$this->disqus->parentid))): ?>
+                    <div class="pull-left row">
+                    <?php $tags = \modules\defaultModule\models\tag::make_list(); ?>
+                        <div class="col-md-12">
+                            <?php  if(count($tags)): ?>
+                            <select name="tag" class="form-control">
+                                <?php foreach ($tags as $tag) : ?>
+                                <option value="<?= $tag->tag_id ?>" <?= ($is_edit && !@$this->disqus->parentid && $tag->tag_id == $this->disqus->tag_id) ? "selected" : "" ?>><?= $tag->tag_name ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <?php else: ?> 
+                            <span class="text-muted" style="<?= !count($tags) ? "" : "display: none;" ?>"><span class="fa fa-ban"></span> No Tag Defined!</span>
+                           <?php endif; ?> 
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    <button type="submit" class='btn btn-default pull-right' style='background-color:#fff!important; font-weight: bold; color:#000;border-radius: 0;'><span class='fa fa-save'></span> Post</button>
             </div>
         </form>
     </div>
