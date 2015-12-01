@@ -7,7 +7,7 @@
     # if there is any second argument passed by shell we consider it as REQUEST URI
     @$_SERVER['REQUEST_URI'] || $_SERVER['REQUEST_URI'] = count($argv) ? \array_shift($argv) : "/";
 
-    defined('RUNNING_ENV') || define('RUNNING_ENV', 'DEVELOPMENT');
+    defined('RUNNING_ENV') || define('RUNNING_ENV', 'PRODUCTION');
 
     defined('PUBLIC_HTML') || define('PUBLIC_HTML', dirname(__FILE__));
 
