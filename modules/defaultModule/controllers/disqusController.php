@@ -57,6 +57,7 @@ class disqusController extends \zinux\kernel\controller\baseController
             $next = \modules\defaultModule\models\disqus::first(array('order' => 'created_at asc', 'conditions' => array('parentid = ?', $disqus->disqusid)));
             if($next) {
                 $next->title = $disqus->title;
+                $next->tag_id = $disqus->tag_id;
                 $next->parentid = NULL;
                 $next->save();
                 $next->readonly();
