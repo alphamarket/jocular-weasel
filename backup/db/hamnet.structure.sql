@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 01, 2015 at 11:08 PM
+-- Generation Time: Jan 05, 2016 at 01:59 PM
 -- Server version: 5.5.46-0ubuntu0.14.04.2-log
 -- PHP Version: 5.5.9-1ubuntu4.14
 
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `disquses` (
   KEY `created_by` (`created_by`),
   KEY `parentid` (`parentid`),
   KEY `tag_id` (`tag_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `exceptions` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`exceptionid`),
   UNIQUE KEY `exception_hash` (`exception_hash`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=31 ;
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `tag_name` varchar(128) CHARACTER SET latin1 COLLATE latin1_general_ci DEFAULT NULL,
   PRIMARY KEY (`tag_id`),
   UNIQUE KEY `tag_name` (`tag_name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Constraints for table `disquses`
 --
 ALTER TABLE `disquses`
-  ADD CONSTRAINT `disquses_ibfk_1` FOREIGN KEY (`parentid`) REFERENCES `disquses` (`disqusid`) ON DELETE SET NULL ON UPDATE SET NULL,
+  ADD CONSTRAINT `disquses_ibfk_1` FOREIGN KEY (`parentid`) REFERENCES `disquses` (`disqusid`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `disquses_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`userid`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `disquses_ibfk_3` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`tag_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
