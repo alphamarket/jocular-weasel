@@ -35,9 +35,11 @@
                         <a class="page-scroll" href="#page-top"></a>
                     </li>
                     <?php if(!\modules\defaultModule\models\user::HasSignedin()): ?>
+                    <?php if(!\zinux\kernel\application\config::GetConfig("idisqus.disable.signup")): ?>
                     <li>
                         <a class="page-scroll" href="/signup"><span class="fa fa-plug"></span> Signup</a>
                     </li>
+                    <?php endif; ?>
                     <li>
                         <a class="page-scroll" href="/signin"><span class="fa fa-sign-in"></span> Signin</a>
                     </li>
