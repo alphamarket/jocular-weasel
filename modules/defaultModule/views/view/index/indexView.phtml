@@ -17,9 +17,10 @@
         </small>
         <div class="clearfix"></div>
     </div>
-    <div style="margin: 10px;" dir="auto">
+    <div style="margin: 10px; display: none" dir="auto" class="disqus-content">
         <?= substr(/*strip_tags*/($disqus->context), 0) ?>
     </div>
+    <div class='text-center disqus-content-spinner' style="font-size: 170%"><span class='fa fa-spinner fa-spin'></span></div>
     <div class="clearfix" style="margin-top: 70px!important;"></div>
 </div>
 <?php endforeach; ?>
@@ -59,11 +60,33 @@
 </nav>
 <?php endif; ?>
 <script type="text/javascript" src="/statics/js/moment.min.js"></script>
-<script src="/statics/js/jquery.min.js" type="text/javascript"></script> 
+<script type="text/javascript" src="/statics/js/jquery.min.js"></script> 
 <script type='text/javascript'>
     $(document).ready(function(){
         $(".updated-date[data-date]").each(function(index, elem) {
             $(this).html("<span class='fa fa-clock-o'></span> " + moment($(this).attr('data-date')).fromNow('ll') + " ago");
         });
+        $(".disqus-content").each(function(){
+            var s = 2000;
+            var wc = $(this).text().split(" ").length;
+            var hc = 200;
+            if(wc < 100) { $(this).show().next('.disqus-content-spinner').remove(); return; }
+            var show_more_text = '<strong><i class="fa fa-caret-down"></i> Show More!</strong>';
+            var show_less_text = '<strong><i class="fa fa-caret-up"></i> Show Less!</strong>';
+            $('<div class="text-expand text-center">'+show_more_text+'</div>').hide().insertAfter(this).fadeIn(s).data('origin-height', $(this).height()).data('origin-elem', this).click(function(){
+                var origin_elem = $(this).data('origin-elem');
+                console.log([$(origin_elem).height() , $(this).data('origin-height')]);
+                if($(origin_elem).innerHeight() !== $(this).data('origin-height')) {
+                    $(origin_elem).animate({height: $(this).data('origin-height')});
+                    $(this).html(show_less_text);
+                } else {
+                    $(origin_elem).animate({height: hc});
+                    $(this).html(show_more_text);
+                }
+            });
+            $(this).fadeIn(s).height(hc);
+            $(this).parent().find('.disqus-content-spinner').remove();
+        });
     });
 </script>
+<style type='text/css'>.text-expand{border:1px solid #e7e7e7;color:#ADADAD;padding:10px;margin-top:0;cursor:pointer}.disqus-content{overflow-y:hidden}</style>
