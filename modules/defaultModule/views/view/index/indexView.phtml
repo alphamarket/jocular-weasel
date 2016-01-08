@@ -20,7 +20,6 @@
     <div style="margin: 10px;" dir="auto" class="disqus-content">
         <?= $disqus->context ?>
     </div>
-    <div class='text-center disqus-content-spinner' style="font-size: 170%"><span class='fa fa-spinner fa-spin'></span></div>
     <div class="clearfix" style="margin-top: 70px!important;"></div>
 </div>
 <?php endforeach; ?>
@@ -75,7 +74,6 @@
             var show_less_text = '<strong><i class="fa fa-caret-up"></i> Show Less!</strong>';
             $('<div class="text-expand text-center">'+show_more_text+'</div>').hide().insertAfter(this).fadeIn(s).data('origin-height', $(this).height()).data('origin-elem', this).click(function(){
                 var origin_elem = $(this).data('origin-elem');
-                console.log([$(origin_elem).height() , $(this).data('origin-height')]);
                 if($(origin_elem).innerHeight() !== $(this).data('origin-height')) {
                     $(origin_elem).animate({height: $(this).data('origin-height')});
                     $(this).html(show_less_text);
@@ -84,8 +82,7 @@
                     $(this).html(show_more_text);
                 }
             });
-            $(this).fadeIn(s).height(hc);
-            $(this).parent().find('.disqus-content-spinner').remove();
+            $(this).fadeIn(s, function() { $(this).animate({height: hc}, 1500); });
         });
     });
 </script>
