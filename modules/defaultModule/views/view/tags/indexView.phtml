@@ -3,7 +3,7 @@
     <?php foreach ($this->msg as $msg) : ?>
     <div class="alert alert-info alert-dismissible">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class='fa fa-quote-left'> <strong>Update:</strong> <?= $msg ?></span>
+        <span class='fa fa-quote-left pull-left' style='margin-top: -5px'></span> <strong>Update:</strong> <?= $msg ?>
     </div>
     <?php endforeach; ?>
 <?php endif; ?>
@@ -58,6 +58,7 @@
         $("a#newArea").click(function(){
             disableEditArea(false);
             $('#editArea #delete button').attr('disabled', true);
+            $("#editArea form input[name='tag_id']").remove();
             $("#editArea form input[name='tag_name']").val('').focus();
         });
     });
