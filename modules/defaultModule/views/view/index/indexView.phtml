@@ -17,8 +17,8 @@
         </small>
         <div class="clearfix"></div>
     </div>
-    <div style="margin: 10px; display: none" dir="auto" class="disqus-content">
-        <?= substr(/*strip_tags*/($disqus->context), 0) ?>
+    <div style="margin: 10px;" dir="auto" class="disqus-content">
+        <?= $disqus->context ?>
     </div>
     <div class='text-center disqus-content-spinner' style="font-size: 170%"><span class='fa fa-spinner fa-spin'></span></div>
     <div class="clearfix" style="margin-top: 70px!important;"></div>
