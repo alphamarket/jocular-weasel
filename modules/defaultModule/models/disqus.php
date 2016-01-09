@@ -33,7 +33,7 @@ class disqus extends \ActiveRecord\Model
                 ->joins("INNER JOIN disquses ON disquses.disqusid = disquses.parentid")
                 ->joins("INNER JOIN users ON users.userid= disquses.created_by")
                 ->limit(1)
-                ->order("disquses.updated_at desc");
+                ->order("disquses.created_at desc");
         $latest_topics = array();
         foreach($roots as $root) {
                 $qb->where("parentid = ?", $root->disqusid);
