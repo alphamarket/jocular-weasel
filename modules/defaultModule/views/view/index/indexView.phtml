@@ -69,7 +69,7 @@
             var s = 2000;
             var wc = $(this).text().split(" ").length;
             var hc = 200;
-            if(wc < 100) { $(this).show().next('.disqus-content-spinner').remove(); return; }
+            if(wc < hc) { $(this).show().next('.disqus-content-spinner').remove(); return; }
             var show_more_text = '<strong><i class="fa fa-caret-down"></i> Show More!</strong>';
             var show_less_text = '<strong><i class="fa fa-caret-up"></i> Show Less!</strong>';
             $('<div class="text-expand text-center">'+show_more_text+'</div>').hide().insertAfter(this).fadeIn(s).data('origin-height', $(this).height()).data('origin-elem', this).click(function(){
